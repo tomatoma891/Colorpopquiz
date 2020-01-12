@@ -1,80 +1,95 @@
 function makeColourValue() {
     return Math.round(Math.random() * 255);
 }
-
 function setButtonColour(button, red, green, blue) {
     button.setAttribute('style',
         'background-color: rgb(' + red + ',' + green + ',' + blue + ');'
     );
 }
+function setBackgroundColour(selectedColor) {
+    console.log("setting bkgrnd");
+    document.body.style.backgroundColor = selectedColor;
+}
 
 var buttons = document.getElementsByClassName('colourButton');
 var heading = document.getElementById('colourValue');
 var answerMessage = document.getElementById('answer');
-
 var score = 0;
 var counter = 0;
-
 function startGame() {
+    console.log("starting");
+    document.getElementById("hide").style.display = "block";
     answerMessage.innerHTML = "";
     var answerButton = Math.round(Math.random() * (buttons.length - 1));
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = false;
+        var red = makeColourValue();
+        var green = makeColourValue();
+        var blue = makeColourValue();
+        setButtonColour(buttons[i], red, green, blue);
+        if (i === answerButton) {
+            heading.innerHTML = `(${red}, ${green}, ${blue})`;;
+        }
+        buttons[i].addEventListener('click', function () {
+            if (this === buttons[answerButton]) {
+                answerMessage.innerHTML = "Correct!";
+                var selectedColor = this.style.backgroundColor;
+                setBackgroundColour(selectedColor);
+                score = score + 1;
+                document.getElementById('score').innerHTML = "Score: " + score;
+                counter++;
+                if (counter > 5) {
+                    alert("Game over");
 
-    for (var j = 0; j <= 5; j++) {
-        console.log("game looping");
-        for (var i = 0; i < buttons.length; i++) {
+                }
+                console.log("cnt", counter)
+                for (var j = 0; j < buttons.length; j++) {
+                    buttons[j].disabled = true;
+                }
+            } else {
+                answerMessage.innerHTML = "Wrong answer! Guess again!";
+                counter++
+                console.log("cnt", counter)
+                for (var j = 0; j < buttons.length; j++) {
+                    buttons[j].disabled = true;
+                }
+                if (counter > 4) {
+                    alert("Game over");
+                    localStorage.setItem("Score", score);
+                    return window.location.assign("score.html");
 
-            var red = makeColourValue();
-            var green = makeColourValue();
-            var blue = makeColourValue();
 
-            setButtonColour(buttons[i], red, green, blue);
 
-            if (i === answerButton) {
-                heading.innerHTML = `(${red}, ${green}, ${blue})`;;
+
+
+                }
             }
-
-            buttons[i].addEventListener('click', function () {
-                buttons[i].removeEventListener('click', function () {
-
-                    if (this === buttons[answerButton]) {
-                        answerMessage.innerHTML = "Correct!";
-                        score = score + 1;
-                        console.log("score ", score)
-                        document.getElementById('score').innerHTML = "Score: " + score;
-                        counter++;
-
-
-                    } else {
-                        answerMessage.innerHTML = "Wrong answer! Guess again!";
-                        counter++
-                    }
-                });
-            });
-
-
-
-        };
-
-    }
-
-    //ends
-
-    if (j === 5) {
-        console.log("game over");
-
+        });
+    };
+}
+function resetGame() {
+    document.body.style.backgroundColor = "white";
+    answerMessage.innerHTML = "";
+    var answerButton = Math.round(Math.random() * (buttons.length - 1));
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = false;
+        var red = makeColourValue();
+        var green = makeColourValue();
+        var blue = makeColourValue();
+        setButtonColour(buttons[i], red, green, blue);
+        if (i === answerButton) {
+            heading.innerHTML = `(${red}, ${green}, ${blue})`;;
+        }
     }
 }
 
 
-
-startGame();
-
-document.getElementById('resetButton').addEventListener('click', startGame);
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('resetButton').addEventListener('click', resetGame);
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("adding score to page");
     document.getElementById('score').innerHTML = "Score: " + score;
 })
-var timeleft = 10;
+var timeleft = 75;
 var downloadTimer = setInterval(function () {
     document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
     timeleft -= 1;
