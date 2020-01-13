@@ -33,6 +33,26 @@ h1 {
     font-weight: 500;
   }
 
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .flex-center {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+
+
 .btn {
     font-size: 1rem;
     padding: 1rem 0;
@@ -44,7 +64,11 @@ h1 {
     color: black;
     background-color:#27E0D6;
   }
-
+  .btn[disabled]:hover {
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
   form {
     width: 100%;
     display: flex;
@@ -64,3 +88,4 @@ h1 {
   input::placeholder {
     color: #aaa;
   }
+ 

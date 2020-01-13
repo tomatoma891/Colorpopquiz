@@ -55,7 +55,7 @@ function startGame() {
                 }
                 if (counter > 4) {
                     alert("Game over");
-                    localStorage.setItem("Score", score);
+                    localStorage.setItem("mostRecentScore", score);
                     return window.location.assign("score.html");
 
 
