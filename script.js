@@ -30,41 +30,43 @@ function startGame() {
         if (i === answerButton) {
             heading.innerHTML = `(${red}, ${green}, ${blue})`;;
         }
-        buttons[i].addEventListener('click', function () {
-            if (this === buttons[answerButton]) {
-                answerMessage.innerHTML = "Correct!";
-                var selectedColor = this.style.backgroundColor;
-                setBackgroundColour(selectedColor);
-                score = score + 1;
-                document.getElementById('score').innerHTML = "Score: " + score;
-                counter++;
-                if (counter > 5) {
-                    alert("Game over");
+        buttons[i].addEventListener
+            ('click', function () {
+                if (this === buttons[answerButton]) {
+                    answerMessage.innerHTML = "Correct!";
+                    var selectedColor = this.style.backgroundColor;
+                    setBackgroundColour(selectedColor);
+                    score = score + 1;
+                    document.getElementById('score').innerHTML = "Score: " + score;
+                    counter++;
+                    if (counter > 5) {
+                        alert("Game over");
 
+                    }
+                    console.log("cnt", counter)
+                    for (var j = 0; j < buttons.length; j++) {
+                        buttons[j].disabled = true;
+                    }
+                    console.log("user guess")
+                } else {
+                    answerMessage.innerHTML = "Wrong answer! Guess again!";
+                    counter++
+                    console.log("cnt", counter)
+                    for (var j = 0; j < buttons.length; j++) {
+                        buttons[j].disabled = true;
+                    }
+                    if (counter > 4) {
+                        alert("Game over");
+                        localStorage.setItem("mostRecentScore", score);
+                        return window.location.assign("score.html");
+
+
+
+
+
+                    }
                 }
-                console.log("cnt", counter)
-                for (var j = 0; j < buttons.length; j++) {
-                    buttons[j].disabled = true;
-                }
-            } else {
-                answerMessage.innerHTML = "Wrong answer! Guess again!";
-                counter++
-                console.log("cnt", counter)
-                for (var j = 0; j < buttons.length; j++) {
-                    buttons[j].disabled = true;
-                }
-                if (counter > 4) {
-                    alert("Game over");
-                    localStorage.setItem("mostRecentScore", score);
-                    return window.location.assign("score.html");
-
-
-
-
-
-                }
-            }
-        });
+            });
     };
 }
 function resetGame() {
@@ -77,6 +79,7 @@ function resetGame() {
         var green = makeColourValue();
         var blue = makeColourValue();
         setButtonColour(buttons[i], red, green, blue);
+        console.log("answer")
         if (i === answerButton) {
             heading.innerHTML = `(${red}, ${green}, ${blue})`;;
         }
