@@ -32,12 +32,29 @@ function startGame() {
         }
         buttons[i].addEventListener
             ('click', function () {
+                //before we test get the colourVal to equal to buttons[answerButton] style="rbg"
+                document.getElementById('colourValue').innerHTML = buttons[answerButton].style.backgroundColor;
+
+                console.log(buttons[answerButton])
+                console.log("current style bg color: " + this.style.backgroundColor);
+
+                //if correct
                 if (this === buttons[answerButton]) {
+                    //display correct
                     answerMessage.innerHTML = "Correct!";
+                    //create var to update color
                     var selectedColor = this.style.backgroundColor;
+                    //update background color
                     setBackgroundColour(selectedColor);
+                    //update score
                     score = score + 1;
+                    //displpay score via html
                     document.getElementById('score').innerHTML = "Score: " + score;
+
+
+                    //display color value via html
+                    //document.getElementById('colourValue').innerHTML = selectedColor;
+
                     counter++;
                     if (counter > 5) {
                         alert("Game over");
@@ -101,4 +118,5 @@ var downloadTimer = setInterval(function () {
         document.getElementById("countdown").innerHTML = "Finished"
     }
 }, 1000);
+
 
